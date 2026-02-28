@@ -1,0 +1,80 @@
+<svg width="1200" height="400" viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="50%" stop-color="#161b27"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </linearGradient>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="55" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>
+    <filter id="textglow"><feGaussianBlur stdDeviation="8" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>
+    <clipPath id="c"><rect width="1200" height="400"/></clipPath>
+  </defs>
+
+  <rect width="1200" height="400" fill="url(#bg)"/>
+
+  <!-- ambient blobs -->
+  <ellipse cx="160" cy="120" rx="220" ry="180" fill="#38bdf8" opacity="0.055" filter="url(#glow)"/>
+  <ellipse cx="1040" cy="300" rx="240" ry="180" fill="#c084fc" opacity="0.065" filter="url(#glow)"/>
+  <ellipse cx="600" cy="200" rx="200" ry="140" fill="#818cf8" opacity="0.04" filter="url(#glow)"/>
+
+  <!-- grid -->
+  <pattern id="gr" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+    <path d="M50 0L0 0 0 50" fill="none" stroke="#ffffff06" stroke-width="0.6"/>
+  </pattern>
+  <rect width="1200" height="400" fill="url(#gr)"/>
+
+  <!-- top accent line -->
+  <rect x="0" y="0" width="1200" height="2" fill="url(#g2)" opacity="0.7"/>
+
+  <!-- Robot icon ring -->
+  <circle cx="600" cy="118" r="44" fill="none" stroke="url(#g2)" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="600" cy="118" r="38" fill="#161b27"/>
+  <text x="600" y="130" font-family="serif" font-size="34" text-anchor="middle" fill="url(#g1)">🤖</text>
+
+  <!-- Main title -->
+  <text x="600" y="198" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    font-size="46" font-weight="800" text-anchor="middle" letter-spacing="-1" filter="url(#textglow)">
+    <tspan fill="url(#g2)">Hi, I'm Doraemon</tspan>
+  </text>
+
+  <!-- Subtitle -->
+  <text x="600" y="237" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+    font-size="17" font-weight="400" fill="#8b949e" text-anchor="middle" letter-spacing="0.3">
+    AI × Product × Growth · 用行动把人生带到更高的位置
+  </text>
+
+  <!-- Divider -->
+  <rect x="500" y="260" width="200" height="1.5" rx="1" fill="url(#g2)" opacity="0.4"/>
+
+  <!-- Pill badges -->
+  <g font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="500">
+    <rect x="326" y="276" width="90" height="24" rx="12" fill="#38bdf820" stroke="#38bdf840" stroke-width="1"/>
+    <text x="371" y="292" fill="#38bdf8" text-anchor="middle">🧠 AI Builder</text>
+
+    <rect x="428" y="276" width="100" height="24" rx="12" fill="#818cf820" stroke="#818cf840" stroke-width="1"/>
+    <text x="478" y="292" fill="#818cf8" text-anchor="middle">📦 PM Mindset</text>
+
+    <rect x="540" y="276" width="116" height="24" rx="12" fill="#c084fc20" stroke="#c084fc40" stroke-width="1"/>
+    <text x="598" y="292" fill="#c084fc" text-anchor="middle">🚀 Growth Hacker</text>
+
+    <rect x="668" y="276" width="104" height="24" rx="12" fill="#34d39920" stroke="#34d39940" stroke-width="1"/>
+    <text x="720" y="292" fill="#34d399" text-anchor="middle">⚡ Action Taker</text>
+
+    <rect x="784" y="276" width="90" height="24" rx="12" fill="#fb923c20" stroke="#fb923c40" stroke-width="1"/>
+    <text x="829" y="292" fill="#fb923c" text-anchor="middle">🎯 Operator</text>
+  </g>
+
+  <!-- Bottom bar -->
+  <rect x="0" y="384" width="1200" height="16" fill="url(#bg)"/>
+  <rect x="0" y="398" width="1200" height="2" fill="url(#g2)" opacity="0.5"/>
+</svg>
