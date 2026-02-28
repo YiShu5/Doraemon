@@ -102,8 +102,6 @@
 
 <div align="center">
 
-<img height="165" src="https://github-profile-trophy.vercel.app/?username=YiShu5&theme=react&no-frame=false&no-bg=false&margin-w=6&column=3" />
-&nbsp;&nbsp;
 <img height="165" src="https://streak-stats.demolab.com/?user=YiShu5&theme=react&border_radius=10&hide_border=false" />
 
 </div>
