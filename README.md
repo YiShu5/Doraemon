@@ -102,9 +102,9 @@
 
 <div align="center">
 
-<img height="170" src="https://github-readme-stats.vercel.app/api?username=YiShu5&show_icons=true&theme=react&border_radius=10&locale=cn&count_private=true&include_all_commits=true" />
+<img height="165" src="https://github-readme-stats.vercel.app/api?username=YiShu5&show_icons=true&theme=react&border_radius=10&count_private=true&include_all_commits=true&hide_border=false" />
 &nbsp;&nbsp;
-<img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=YiShu5&layout=compact&theme=react&border_radius=10&locale=cn&langs_count=6" />
+<img height="165" src="https://streak-stats.demolab.com/?user=YiShu5&theme=react&border_radius=10&hide_border=false" />
 
 </div>
 
