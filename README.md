@@ -28,6 +28,49 @@
 
 ---
 
+## 📌 Pinned
+
+<div align="center">
+<table>
+<tr>
+<td width="50%" valign="top">
+
+<a href="https://github.com/YiShu5/my-bookmarks">
+  <img src="https://img.shields.io/badge/🔖_my--bookmarks-private-818cf8?style=for-the-badge&labelColor=161b22" />
+</a>
+
+**AI 智能收藏夹 · 高密度知识萃取器**
+
+拒绝收藏即吃灰。DeepSeek 自动阅读 → 摘要 → 知识卡片。
+
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-black?style=flat-square&logo=next.js)
+![PWA](https://img.shields.io/badge/PWA-5A0FC8?style=flat-square)
+![DeepSeek](https://img.shields.io/badge/DeepSeek_AI-6366f1?style=flat-square)
+
+</td>
+<td width="50%" valign="top">
+
+<a href="https://github.com/YiShu5/meipingbao">
+  <img src="https://img.shields.io/badge/📈_meipingbao-private-34d399?style=for-the-badge&labelColor=161b22" />
+</a>
+
+**门店运营 SOP 自动化 · 北京零售市场实战**
+
+把 SOP 从文档变成工具。6 大品类 × 6 种风格，2 秒生成。
+
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-black?style=flat-square&logo=next.js)
+![Tailwind](https://img.shields.io/badge/Tailwind-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![DeepSeek](https://img.shields.io/badge/DeepSeek_AI-6366f1?style=flat-square)
+
+</td>
+</tr>
+</table>
+</div>
+
+---
+
 ## 🚀 Project Showcase
 
 <table>
