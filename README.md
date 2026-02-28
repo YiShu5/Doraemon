@@ -102,9 +102,9 @@
 
 <div align="center">
 
-<img height="170" src="https://github-readme-stats.vercel.app/api?username=YiShu5&show_icons=true&theme=github_dark&hide_border=true&count_private=true&include_all_commits=true&bg_color=0d1117&title_color=818cf8&icon_color=38bdf8&text_color=8b949e" />
+<img height="170" src="https://github-readme-stats.vercel.app/api?username=YiShu5&show_icons=true&theme=react&border_radius=10&locale=cn&count_private=true&include_all_commits=true" />
 &nbsp;&nbsp;
-<img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=YiShu5&layout=compact&theme=github_dark&hide_border=true&langs_count=6&bg_color=0d1117&title_color=818cf8&text_color=8b949e" />
+<img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=YiShu5&layout=compact&theme=react&border_radius=10&locale=cn&langs_count=6" />
 
 </div>
 
