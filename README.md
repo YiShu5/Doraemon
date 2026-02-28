@@ -1,6 +1,6 @@
 <div align="center">
 
-![Hero](cover.png)
+![Hero](cover.svg)
 
 <br/>
 
