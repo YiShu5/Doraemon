@@ -49,6 +49,7 @@ body::before{
   overflow:hidden;display:flex;flex-wrap:wrap;align-content:flex-start;
   padding:20px;
   animation:float-deco 12s ease-in-out infinite;
+  will-change:transform;
 }
 @keyframes float-deco{
   0%,100%{transform:translateY(0)}
@@ -87,9 +88,10 @@ body::before{
   cursor:pointer;
   z-index:2;
 }
+/* 只动 transform 让 GPU 合成，避免 box-shadow 触发重绘 */
 @keyframes dora-breathe{
-  0%,100%{transform:scale(1);box-shadow:0 3px 8px rgba(1,111,173,0.3)}
-  50%{transform:scale(1.05);box-shadow:0 5px 15px rgba(1,111,173,0.4)}
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.05)}
 }
 .take-copter{
   position:absolute;
@@ -170,45 +172,33 @@ body::before{
   60%{transform:translateY(0) scale(0.96)}
   85%{transform:translateY(-3px) scale(1.02)}
 }
-/* 空闲提醒气泡（speech bubble 带尾巴）*/
+/* 空闲提醒：屏幕正中央大字提醒 */
 .dora-idle-bubble{
-  position:absolute;
-  left:100%;top:50%;margin-left:14px;
-  background:#fff;
+  position:fixed;
+  top:50%;left:50%;
+  background:linear-gradient(145deg,#FFFFFF,#FFF8E1);
   color:var(--dora-deep);
-  padding:8px 14px;
-  border-radius:14px 14px 14px 4px;
-  font-size:13px;font-weight:700;
-  border:2px solid var(--dora-yellow);
-  box-shadow:0 4px 14px rgba(1,111,173,0.25);
+  padding:28px 56px;
+  border-radius:28px;
+  font-size:26px;font-weight:800;
+  letter-spacing:0.04em;
+  border:3px solid var(--dora-yellow);
+  box-shadow:0 16px 48px rgba(1,111,173,0.35),0 0 0 8px rgba(245,197,24,0.18);
   white-space:nowrap;
   pointer-events:none;
-  z-index:200;
+  z-index:1500;
   opacity:0;
-  transform:translate(-10px,-50%) scale(0.5);
-  animation:idle-bubble-pop 5s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  transform:translate(-50%,-50%) scale(0.4);
+  animation:idle-center-pop 4s cubic-bezier(0.34,1.56,0.64,1) forwards;
 }
-.dora-idle-bubble::before{
-  content:'';position:absolute;
-  left:-10px;top:50%;
-  margin-top:-1px;
-  border:8px solid transparent;
-  border-right-color:var(--dora-yellow);
-  transform:translateY(-50%);
-}
-.dora-idle-bubble::after{
-  content:'';position:absolute;
-  left:-7px;top:50%;
-  border:7px solid transparent;
-  border-right-color:#fff;
-  transform:translateY(-50%);
-}
-@keyframes idle-bubble-pop{
-  0%{opacity:0;transform:translate(-10px,-50%) scale(0.5)}
-  8%{opacity:1;transform:translate(0,-50%) scale(1.08)}
-  16%{transform:translate(0,-50%) scale(1)}
-  88%{opacity:1;transform:translate(0,-50%) scale(1)}
-  100%{opacity:0;transform:translate(10px,-50%) scale(0.95)}
+@keyframes idle-center-pop{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(0.4) rotate(-8deg)}
+  10%{opacity:1;transform:translate(-50%,-50%) scale(1.12) rotate(3deg)}
+  20%{transform:translate(-50%,-50%) scale(0.94) rotate(-2deg)}
+  30%{transform:translate(-50%,-50%) scale(1.04) rotate(1deg)}
+  40%{transform:translate(-50%,-50%) scale(1) rotate(0deg)}
+  85%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0deg)}
+  100%{opacity:0;transform:translate(-50%,-58%) scale(0.95) rotate(0deg)}
 }
 .logo{font-size:24px;font-weight:800;color:var(--dora-white);margin-right:36px;white-space:nowrap;letter-spacing:0;text-shadow:0 1px 2px rgba(0,0,0,0.1)}
 .logo span{font-size:13px;font-weight:500;color:var(--dora-yellow);opacity:1;margin-left:8px}
@@ -921,21 +911,18 @@ function triggerIdleReminder() {
   // 编辑器为空就不催（用户可能还没开始写）
   const hasContent = (editor.innerText || '').trim().length > 30;
   if (!hasContent) { resetIdleTimer(); return; }
-  // 头像跳一下
+  // 头像跳一下（呼应中央提醒）
   avatar.classList.remove('bounce');
   void avatar.offsetWidth;
   avatar.classList.add('bounce');
   setTimeout(() => avatar.classList.remove('bounce'), 700);
-  // 气泡（避免和已有的彩蛋气泡叠加）
-  const oldGadget = avatar.querySelector('.dora-gadget-bubble');
-  const oldIdle = avatar.querySelector('.dora-idle-bubble');
-  if (oldGadget) oldGadget.remove();
-  if (oldIdle) oldIdle.remove();
+  // 屏幕正中央大字气泡
+  document.querySelectorAll('.dora-idle-bubble').forEach(el => el.remove());
   const bubble = document.createElement('div');
   bubble.className = 'dora-idle-bubble';
   bubble.textContent = pickRandom(IDLE_MESSAGES);
-  avatar.appendChild(bubble);
-  setTimeout(() => bubble.remove(), 5100);
+  document.body.appendChild(bubble);
+  setTimeout(() => bubble.remove(), 4100);
   // 继续监控，下次空闲再触发
   resetIdleTimer();
 }
@@ -1042,9 +1029,9 @@ window.addEventListener('DOMContentLoaded', () => {
   pushHistorySnapshot(); // 初始快照
   // 启动空闲提醒：编辑器输入 / 全局点击或键盘活动 → 重置计时器
   resetIdleTimer();
-  editor.addEventListener('input', resetIdleTimer);
-  document.addEventListener('keydown', resetIdleTimer);
-  document.addEventListener('mousedown', resetIdleTimer);
+  editor.addEventListener('input', resetIdleTimer, { passive: true });
+  document.addEventListener('keydown', resetIdleTimer, { passive: true });
+  document.addEventListener('mousedown', resetIdleTimer, { passive: true });
 });
 
 // ===================================================================
@@ -1122,10 +1109,15 @@ function loadDraft() {
   } catch { return null; }
 }
 function clearDraft() { try { localStorage.removeItem(DRAFT_KEY); } catch {} }
+let autosaveIntervalId = null;
 function startAutosave() {
-  setInterval(saveDraft, 5000);
-  // 关页面前最后存一次
-  window.addEventListener('beforeunload', saveDraft);
+  if (autosaveIntervalId) clearInterval(autosaveIntervalId);
+  autosaveIntervalId = setInterval(saveDraft, 5000);
+  // 关页面前最后存一次 + 清理 interval
+  window.addEventListener('beforeunload', () => {
+    saveDraft();
+    if (autosaveIntervalId) clearInterval(autosaveIntervalId);
+  });
 }
 
 // ===================================================================
@@ -5489,14 +5481,19 @@ function toggleStylesDropdown() {
     dd.innerHTML = html;
   }
   dd.classList.add('show');
-  // Close on outside click
+  // Close on outside click（单例 handler，避免连点重复挂载）
+  if (toggleStylesDropdown._handler) {
+    document.removeEventListener('click', toggleStylesDropdown._handler);
+  }
   setTimeout(() => {
     const handler = e => {
       if (!dd.contains(e.target) && e.target.id !== 'btnMyStyles') {
         dd.classList.remove('show');
         document.removeEventListener('click', handler);
+        toggleStylesDropdown._handler = null;
       }
     };
+    toggleStylesDropdown._handler = handler;
     document.addEventListener('click', handler);
   }, 10);
 }
