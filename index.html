@@ -32,8 +32,12 @@
   --accent:var(--dora-yellow);
 }
 html{font-size:14px}
-body{font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:var(--bg);color:var(--text);min-width:768px;height:100vh;display:flex;flex-direction:column;overflow:hidden}
-button{font-family:inherit;cursor:pointer;border:none;background:none;font-size:inherit;color:#fff}
+body{font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:var(--bg);color:var(--text);min-width:768px;height:100vh;display:flex;flex-direction:column;overflow:hidden;cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Cpath d='M3 2L3 15L6 12L9 17.5L11 16.5L8 11L12 11Z' fill='%2303ADF0' stroke='white' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2,default}
+button,a,.nav-btn,.nav-btn-icon,.tb-btn,.tb-btn-text,.pocket-btn,.pocket-item,.more-dropdown-item,.hr-option,.align-option,.sd-card,.edit-mode-chip,.color-chip,.tab-btn,.img-insert-btn,.btn-primary,.btn-secondary,.mode-card,.color-preset,.bg-option,.dora-avatar,.door{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Cpath d='M3 2L3 15L6 12L9 17.5L11 16.5L8 11L12 11Z' fill='%23F5C518' stroke='%23016FAD' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2,pointer}
+input[type=text],input[type=number],input[type=email],textarea{cursor:text}
+.editor,[contenteditable]{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Cpath d='M18 1L21 4L19 6L16 3Z' fill='%23E57373'/%3E%3Cpath d='M16 3L19 6L7 18L4 15Z' fill='%23F5C518' stroke='%23016FAD' stroke-width='0.9' stroke-linejoin='round'/%3E%3Cpath d='M4 15L7 18L4 21L2 20Z' fill='%23BDBDBD'/%3E%3Cpath d='M2 20L4 21L3 22L1 21Z' fill='%23424242'/%3E%3C/svg%3E") 1 21,text}
+select{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Cpath d='M3 2L3 15L6 12L9 17.5L11 16.5L8 11L12 11Z' fill='%23F5C518' stroke='%23016FAD' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2,pointer}
+button{font-family:inherit;border:none;background:none;font-size:inherit;color:#fff}
 input,select,textarea{font-family:inherit;font-size:inherit}
 ::-webkit-scrollbar{width:8px;height:8px}
 ::-webkit-scrollbar-track{background:var(--dora-cream);border-radius:4px}
@@ -301,8 +305,8 @@ body::before{
 .tb-heading-select option{background:#fff;color:#333}
 
 /* ===== More Dropdown ===== */
-.more-dropdown{position:absolute;top:100%;right:0;background:var(--white);border:2px solid var(--dora-light);border-radius:16px;box-shadow:0 8px 32px rgba(1,111,173,0.15);min-width:200px;max-height:300px;overflow-y:auto;z-index:260;display:none;padding:8px}
-.more-dropdown.show{display:block}
+.more-dropdown{position:absolute;top:100%;right:0;background:var(--white);border:2px solid var(--dora-light);border-radius:16px;box-shadow:0 8px 32px rgba(1,111,173,0.15);min-width:200px;max-height:300px;overflow-y:auto;z-index:260;padding:8px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .22s ease,visibility .22s ease,transform .22s ease}
+.more-dropdown.show{opacity:1;visibility:visible;transform:translateY(0)}
 .more-dropdown-item{width:100%;padding:10px 14px;border-radius:12px;font-size:13px;color:var(--dora-deep);text-align:left;display:flex;align-items:center;gap:10px;transition:background .15s}
 .more-dropdown-item:hover{background:var(--dora-cream)}
 .more-dropdown-item .icon{width:24px;text-align:center}
@@ -310,7 +314,7 @@ body::before{
 
 /* ===== Editor Area ===== */
 .editor-wrap{flex:1;overflow:hidden;display:flex;flex-direction:column}
-.editor{flex:1;padding:24px 28px;overflow-y:auto;outline:none;font-size:15px;line-height:1.8;color:var(--text);background:var(--white);border-left:3px solid transparent;border-image:linear-gradient(to bottom,var(--dora-yellow),var(--dora-blue),var(--dora-yellow)) 1 0}
+.editor{flex:1;padding:24px 28px;overflow-y:auto;outline:none;font-size:15px;line-height:1.8;color:var(--text);border-left:3px solid transparent;border-image:linear-gradient(to bottom,var(--dora-yellow),var(--dora-blue),var(--dora-yellow)) 1 0;background-color:#FFFDE7;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 265'%3E%3Cpath d='M80 8 C115 25 140 90 125 160 C110 225 85 250 80 255 C75 250 50 225 35 160 C20 90 45 25 80 8Z' fill='%23B8860B' fill-opacity='0.18'/%3E%3Cpath d='M80 8 Q79 130 80 255' stroke='%23B8860B' stroke-width='2' fill='none' stroke-opacity='0.2'/%3E%3Cpath d='M80 70 Q58 95 38 108' stroke='%23B8860B' stroke-width='1.2' fill='none' stroke-opacity='0.15'/%3E%3Cpath d='M80 100 Q102 120 122 130' stroke='%23B8860B' stroke-width='1.2' fill='none' stroke-opacity='0.15'/%3E%3Cpath d='M80 140 Q60 162 42 175' stroke='%23B8860B' stroke-width='1' fill='none' stroke-opacity='0.12'/%3E%3Cpath d='M80 165 Q100 183 118 195' stroke='%23B8860B' stroke-width='1' fill='none' stroke-opacity='0.12'/%3E%3C/svg%3E"),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 200'%3E%3Cpath d='M60 5 C90 18 110 70 96 125 C82 175 65 195 60 200 C55 195 38 175 24 125 C10 70 30 18 60 5Z' fill='%23B8860B' fill-opacity='0.11'/%3E%3Cpath d='M60 5 Q59 100 60 200' stroke='%23B8860B' stroke-width='1.8' fill='none' stroke-opacity='0.13'/%3E%3Cpath d='M60 55 Q42 75 28 85' stroke='%23B8860B' stroke-width='1' fill='none' stroke-opacity='0.1'/%3E%3Cpath d='M60 85 Q78 100 94 108' stroke='%23B8860B' stroke-width='1' fill='none' stroke-opacity='0.1'/%3E%3Cpath d='M60 120 Q44 138 32 148' stroke='%23B8860B' stroke-width='0.8' fill='none' stroke-opacity='0.08'/%3E%3C/svg%3E"),linear-gradient(158deg,#FFFDE7 0%,#FFF3B0 100%);background-size:240px 340px,160px 240px,100% 100%;background-position:-40px bottom,calc(100% + 15px) 80px,0 0;background-repeat:no-repeat,no-repeat,no-repeat}
 .editor:empty::before{content:attr(data-placeholder);color:#CCC;pointer-events:none}
 .editor img{max-width:100%;height:auto;border-radius:12px;margin:8px 0;display:block}
 .editor-footer{display:flex;align-items:center;justify-content:space-between;padding:6px 16px;background:var(--white);border-top:1px solid var(--dora-light);font-size:12px;color:var(--text3);flex-shrink:0}
@@ -560,7 +564,7 @@ body::before{
       <!-- 分隔 -->
       <span class="tb-sep"></span>
       <!-- 更多区 -->
-      <div style="position:relative">
+      <div style="position:relative" id="pocketDropdownWrap" onmouseenter="clearTimeout(this._lt)" onmouseleave="this._lt=setTimeout(()=>$('moreDropdown').classList.remove('show'),320)">
         <button class="tb-btn-text pocket" id="btnMore" title="哆啦A梦的口袋 · 更多工具" onclick="toggleMoreDropdown()"><svg viewBox="0 0 26 18" width="22" height="15" style="display:inline-block;vertical-align:middle;margin-right:6px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg"><path d="M 2 5 L 24 5 A 11 8 0 0 1 2 5 Z" fill="#FFFFFF" stroke="#016FAD" stroke-width="1.6" stroke-linejoin="round"/><path d="M 4.5 6 L 21.5 6 A 8.5 5.5 0 0 1 4.5 6 Z" fill="#016FAD" fill-opacity="0.35"/><circle cx="8" cy="3" r="0.8" fill="#FFFFFF" opacity="0.95"/><circle cx="19" cy="2.2" r="1" fill="#FFFFFF" opacity="0.95"/></svg>哆啦A梦的口袋 ▾</button>
         <div class="more-dropdown" id="moreDropdown">
           <!-- 文本块 -->
