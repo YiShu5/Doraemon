@@ -37,7 +37,7 @@
 如果仓库已开启 GitHub Pages，可以直接访问项目页面：
 
 ```text
-https://dorlarosendo434-hub.github.io/GZHcomposing/
+https://yishu5.github.io/GZHcomposing/
 ```
 
 如果暂时打不开，请到 GitHub 仓库的 `Settings -> Pages` 中开启 GitHub Pages，选择：
