@@ -202,7 +202,7 @@ body::before{
 }
 .logo{font-size:24px;font-weight:800;color:var(--dora-white);margin-right:36px;white-space:nowrap;letter-spacing:0;text-shadow:0 1px 2px rgba(0,0,0,0.1)}
 .logo span{font-size:13px;font-weight:500;color:var(--dora-yellow);opacity:1;margin-left:8px}
-.nav-group{display:flex;align-items:center;gap:8px;flex:1;flex-wrap:nowrap;overflow-x:auto}
+.nav-group{display:flex;align-items:center;gap:8px;flex:1;flex-wrap:nowrap;overflow:visible}
 .nav-btn{
   padding:8px 16px;border-radius:20px;font-size:13px;
   background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);
@@ -223,6 +223,25 @@ body::before{
 .nav-btn.door{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(145deg,#FFC1DA,#FF8FBF);border:1px solid rgba(255,255,255,0.55);color:#7C2A4F;font-weight:700;box-shadow:0 2px 8px rgba(255,143,191,0.4)}
 .nav-btn.door:hover{background:linear-gradient(145deg,#FFD3E5,#FF9FCB);color:#5A1E3A;transform:translateY(-2px) rotate(-3deg);box-shadow:0 6px 18px rgba(255,143,191,0.55)}
 .nav-btn.door svg{flex-shrink:0}
+/* ===== 口袋扇形样式设置 ===== */
+.pocket-wrap{position:relative}
+.pocket-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:20px;font-size:13px;background:var(--dora-yellow);border:1px solid rgba(245,197,24,0.4);color:var(--dora-deep);font-weight:600;cursor:pointer;transition:all .25s cubic-bezier(0.4,0,0.2,1);white-space:nowrap;box-shadow:0 2px 8px rgba(245,197,24,0.25)}
+.pocket-btn:hover,.pocket-btn.open{transform:translateY(-2px);box-shadow:0 4px 14px rgba(245,197,24,0.5)}
+.shizuka-note{display:inline-block;animation:shizuka-note 2s ease-in-out infinite;font-style:normal;font-size:11px;opacity:0.9}
+@keyframes shizuka-note{0%,100%{transform:translateY(0) rotate(-15deg)}50%{transform:translateY(-4px) rotate(15deg)}}
+.shizuka-note-float{position:absolute;top:-10px;right:-8px;font-size:14px;animation:shizuka-note 1.8s ease-in-out infinite;pointer-events:none}
+.pocket-arrow{font-size:10px;transition:transform .2s;display:inline-block}
+.pocket-btn.open .pocket-arrow{transform:rotate(180deg)}
+.pocket-fan{position:absolute;top:calc(100% + 8px);left:50%;width:0;height:0;z-index:200;pointer-events:none}
+.pocket-item{position:absolute;top:0;left:0;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 14px;background:var(--white);border:2px solid var(--dora-light);border-radius:18px;font-size:11px;font-weight:700;color:var(--dora-deep);cursor:pointer;box-shadow:0 6px 20px rgba(1,111,173,0.18);transform:translate(-50%,-50%) scale(0);opacity:0;pointer-events:none;transition:transform .38s cubic-bezier(0.34,1.56,0.64,1),opacity .2s ease;white-space:nowrap;min-width:54px;text-align:center}
+.pocket-item:hover{background:var(--dora-cream);border-color:var(--dora-yellow);box-shadow:0 8px 24px rgba(245,197,24,0.35)}
+.pocket-item .pi-emoji{font-size:22px;line-height:1}
+.pocket-fan.open .pocket-item{opacity:1;pointer-events:auto}
+.pocket-fan.open .pocket-item:nth-child(1){transform:translate(calc(-50% - 88px),calc(-50% + 20px)) scale(1);transition-delay:0ms}
+.pocket-fan.open .pocket-item:nth-child(2){transform:translate(calc(-50% - 48px),calc(-50% + 66px)) scale(1);transition-delay:60ms}
+.pocket-fan.open .pocket-item:nth-child(3){transform:translate(-50%,calc(-50% + 80px)) scale(1);transition-delay:120ms}
+.pocket-fan.open .pocket-item:nth-child(4){transform:translate(calc(-50% + 48px),calc(-50% + 66px)) scale(1);transition-delay:180ms}
+.pocket-fan.open .pocket-item:nth-child(5){transform:translate(calc(-50% + 88px),calc(-50% + 20px)) scale(1);transition-delay:240ms}
 /* 任意门 toast */
 .teleport-toast{position:fixed;top:80px;left:50%;background:linear-gradient(145deg,#FFC1DA,#FF8FBF);color:#5A1E3A;padding:12px 24px;border-radius:24px;font-size:14px;font-weight:700;box-shadow:0 8px 32px rgba(255,143,191,0.5);z-index:1000;border:2px solid #FFFFFF;pointer-events:none;opacity:0;transform:translateX(-50%) scale(0.6);transition:all .35s cubic-bezier(0.4,0,0.2,1)}
 .teleport-toast.show{opacity:1;transform:translateX(-50%) scale(1)}
@@ -257,7 +276,7 @@ body::before{
 .divider:hover,.divider.active{background:linear-gradient(to bottom,var(--dora-yellow) 0%,var(--dora-deep) 50%,var(--dora-yellow) 100%);width:10px;box-shadow:0 0 10px rgba(245,197,24,0.5)}
 
 /* ===== Editor Toolbar ===== */
-.editor-toolbar{display:flex;align-items:center;gap:6px;padding:10px 16px;background:linear-gradient(180deg,#FFFEF7 0%,var(--white) 100%);border-bottom:2px solid var(--dora-light);flex-wrap:wrap;flex-shrink:0}
+.editor-toolbar{display:flex;align-items:center;gap:6px;padding:10px 16px;background:linear-gradient(180deg,#FFFEF7 0%,var(--white) 100%);border-bottom:2px solid var(--dora-light);flex-wrap:wrap;flex-shrink:0;position:relative;z-index:10}
 /* 轻量层：高频小操作按钮（白底蓝字）*/
 .tb-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:14px;color:var(--dora-deep);background:#fff;border:1.5px solid var(--dora-light);transition:all .2s;font-weight:600;box-shadow:0 1px 3px rgba(1,111,173,0.08);position:relative;overflow:hidden}
 .tb-btn:hover{transform:translateY(-1px);border-color:var(--dora-yellow);background:#FFFCF0;box-shadow:0 3px 10px rgba(245,197,24,0.28)}
@@ -319,6 +338,8 @@ body::before{
 .btn-secondary{padding:10px 18px;border-radius:20px;background:var(--dora-white);border:2px solid var(--dora-light);color:var(--dora-deep);font-size:13px;transition:all .2s}
 .btn-secondary:hover{border-color:var(--dora-yellow);background:var(--dora-cream);transform:translateY(-1px)}
 .btn-secondary.success{background:#4CAF50;color:#FFF;border-color:#4CAF50}
+.btn-save-style{background:var(--dora-blue);border-color:var(--dora-blue);color:#fff}
+.btn-save-style:hover{background:var(--dora-deep);border-color:var(--dora-deep);color:#fff}
 
 /* ===== Settings Panel (right side overlay) ===== */
 .settings-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.3);z-index:200;display:none;opacity:0;transition:opacity .2s}
@@ -371,16 +392,25 @@ body::before{
 .modal input[type=text]:focus{border-color:var(--dora-yellow)}
 
 /* ===== Saved Styles Dropdown ===== */
-.styles-dropdown{position:absolute;top:100%;right:0;background:var(--white);border:2px solid var(--dora-light);border-radius:16px;box-shadow:0 8px 32px rgba(1,111,173,0.15);min-width:260px;max-height:360px;overflow-y:auto;z-index:150;display:none}
-.styles-dropdown.show{display:block}
-.sd-item{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid var(--dora-cream);transition:background .15s}
-.sd-item:hover{background:var(--dora-cream)}
-.sd-item:last-child{border-bottom:none}
-.sd-item .sd-name{flex:1;font-size:13px;cursor:pointer;color:var(--dora-deep)}
-.sd-item .sd-actions{display:flex;gap:4px}
-.sd-item .sd-actions button{font-size:11px;padding:4px 10px;border-radius:20px;background:var(--dora-blue);color:#fff}
-.sd-item .sd-actions button:hover{background:var(--dora-yellow);color:var(--dora-deep)}
+.styles-dropdown{position:absolute;top:100%;right:0;background:var(--white);border:2px solid var(--dora-light);border-radius:16px;box-shadow:0 8px 32px rgba(1,111,173,0.15);min-width:300px;max-height:420px;overflow-y:auto;z-index:150;display:none;flex-direction:column;gap:8px;padding:12px}
+.styles-dropdown.show{display:flex}
+.sd-card{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;border:2px solid var(--dora-light);background:#fff;opacity:0;transform:translateY(12px);transition:border-color .15s,box-shadow .15s}
+.sd-card:hover{border-color:var(--dora-yellow);box-shadow:0 4px 12px rgba(245,197,24,0.18)}
+.sd-card.pop-in{animation:pocket-pop .32s cubic-bezier(0.34,1.56,0.64,1) forwards}
+@keyframes pocket-pop{from{opacity:0;transform:translateY(14px) scale(0.92)}to{opacity:1;transform:translateY(0) scale(1)}}
+.sd-card-colors{width:36px;height:36px;border-radius:50%;flex-shrink:0;overflow:hidden;display:grid;grid-template-columns:1fr 1fr 1fr;border:2px solid rgba(0,0,0,0.08)}
+.sd-card-colors span{display:block}
+.sd-card-body{flex:1;min-width:0;cursor:pointer}
+.sd-card-name{font-size:13px;font-weight:600;color:var(--dora-deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sd-card-meta{font-size:11px;color:var(--text3);margin-top:2px}
+.sd-card-mode-tag{display:inline-block;padding:1px 7px;border-radius:20px;font-size:10px;font-weight:600;color:#fff}
+.sd-card-actions{display:flex;gap:4px;flex-shrink:0}
+.sd-card-actions button{font-size:13px;padding:4px 8px;border-radius:20px;background:transparent;color:var(--dora-deep);border:none;cursor:pointer;transition:background .15s}
+.sd-card-actions button:hover{background:var(--dora-cream)}
 .sd-empty{padding:20px;text-align:center;color:var(--text3);font-size:13px}
+.edit-mode-chip{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 10px;border-radius:12px;border:2px solid var(--dora-light);cursor:pointer;transition:all .15s;min-width:62px;text-align:center;background:#fff}
+.edit-mode-chip:hover{transform:translateY(-2px)}
+.edit-mode-chip span:first-child{font-size:18px}
 
 /* Image Insert Panel */
 .img-panel{position:absolute;top:100%;left:0;background:var(--white);border:2px solid var(--dora-light);border-radius:16px;box-shadow:0 8px 32px rgba(1,111,173,0.15);width:370px;padding:16px;z-index:250;display:none}
@@ -474,11 +504,19 @@ body::before{
   </div>
   <div class="logo">意疏的 AI 口袋</div>
   <div class="nav-group">
-    <button class="nav-btn" onclick="openSettings('mode')" id="btnMode">排版</button>
-    <button class="nav-btn" onclick="openSettings('font')">字体</button>
-    <button class="nav-btn" onclick="openSettings('color')">配色</button>
-    <button class="nav-btn" onclick="openSettings('spacing')">间距</button>
-    <button class="nav-btn" onclick="openSettings('bg')">背景</button>
+    <div class="pocket-wrap" id="pocketWrap">
+      <button class="pocket-btn" id="btnMode" onclick="togglePocket()">
+        🎻 样式设置 <span class="pocket-arrow">▾</span>
+      </button>
+
+      <div class="pocket-fan" id="pocketFan">
+        <button class="pocket-item" onclick="openSettings('mode');closePocket()"><span class="pi-emoji">🖼️</span>排版</button>
+        <button class="pocket-item" onclick="openSettings('font');closePocket()"><span class="pi-emoji">✍️</span>字体</button>
+        <button class="pocket-item" onclick="openSettings('color');closePocket()"><span class="pi-emoji">🎨</span>配色</button>
+        <button class="pocket-item" onclick="openSettings('spacing');closePocket()"><span class="pi-emoji">📐</span>间距</button>
+        <button class="pocket-item" onclick="openSettings('bg');closePocket()"><span class="pi-emoji">🌈</span>背景</button>
+      </div>
+    </div>
   </div>
   <div class="nav-right" style="position:relative">
     <button class="nav-btn" onclick="toggleStylesDropdown()" id="btnMyStyles">我的样式 ▾</button>
@@ -541,7 +579,7 @@ body::before{
       </div>
       <!-- Hidden panels that need to stay -->
       <div class="img-panel" id="imgPanel">
-        <h4>插入图片</h4>
+        <h4>插入图片<button onclick="toggleImgPanel()" style="float:right;background:none;border:none;font-size:16px;cursor:pointer;color:#999;line-height:1;padding:0">✕</button></h4>
         <div class="tab-row">
           <button class="tab-btn active" onclick="switchImgTab('upload',this)">本地上传</button>
           <button class="tab-btn" onclick="switchImgTab('url',this)">URL地址</button>
@@ -591,6 +629,7 @@ body::before{
         <button class="img-insert-btn" onclick="doInsertImage()">插入图片</button>
       </div>
       <div class="hr-panel" id="hrPanel">
+        <button onclick="toggleHrPanel()" style="float:right;background:none;border:none;font-size:14px;cursor:pointer;color:#999;padding:0;line-height:1;margin-bottom:4px">✕</button>
         <button class="hr-option" onclick="insertDivider('basic-line')">基础横线<span class="hr-preview"><span style="width:100%;height:1px;background:#CBD5E1"></span></span></button>
         <button class="hr-option" onclick="insertDivider('dot-line')">短线圆点<span class="hr-preview"><span style="flex:1;height:1px;background:#CBD5E1"></span><span style="width:6px;height:6px;border-radius:50%;background:#94A3B8"></span><span style="flex:1;height:1px;background:#CBD5E1"></span></span></button>
         <button class="hr-option" onclick="insertDivider('ornament-line')">居中装饰<span class="hr-preview"><span style="flex:1;height:1px;background:#CBD5E1"></span><span style="font-size:12px;color:#94A3B8">✦</span><span style="flex:1;height:1px;background:#CBD5E1"></span></span></button>
@@ -600,6 +639,7 @@ body::before{
         <button class="hr-option" onclick="insertSpacer('lg')">段间空（大）<span style="margin-left:auto;font-size:11px;color:#999">48px</span></button>
       </div>
       <div class="align-panel" id="alignPanel">
+        <button onclick="toggleAlignPanel()" style="float:right;background:none;border:none;font-size:14px;cursor:pointer;color:#999;padding:0;line-height:1;margin-bottom:4px">✕</button>
         <button class="align-option" id="alignOptionLeft" onclick="chooseTextAlign('left')"><span class="icon">↤</span>左对齐</button>
         <button class="align-option" id="alignOptionCenter" onclick="chooseTextAlign('center')"><span class="icon">↔</span>居中</button>
         <button class="align-option" id="alignOptionRight" onclick="chooseTextAlign('right')"><span class="icon">↦</span>右对齐</button>
@@ -638,7 +678,7 @@ body::before{
 
 <!-- ===== Bottom Bar ===== -->
 <div class="bottom-bar">
-  <button class="btn-secondary" onclick="saveStylePrompt()">💾 保存为我的样式</button>
+  <button class="btn-secondary btn-save-style" onclick="saveStylePrompt()">💾 保存为我的样式</button>
   <button class="btn-secondary" onclick="exportStyleJSON()">📤 导出样式JSON</button>
   <button class="btn-secondary" onclick="importStyleJSON()">📥 导入样式JSON</button>
   <span class="spacer"></span>
@@ -820,6 +860,17 @@ const MODES = [
     hrStyle:'coffee-dots'
   }
 ];
+
+const MODE_META = {
+  'tutorial':          { emoji:'📚', color:'#1E3A5F' },
+  'deep-read':         { emoji:'🌙', color:'#2e2e2e' },
+  'knowledge-blogger': { emoji:'💡', color:'#2563EB' },
+  'japanese':          { emoji:'🌸', color:'#4E8E96' },
+  'sweet':             { emoji:'🍭', color:'#F472B6' },
+  'business':          { emoji:'💼', color:'#374151' },
+  'mario-theme':       { emoji:'🍄', color:'#E53935' },
+  'coffee-journal':    { emoji:'☕', color:'#C8874E' },
+};
 
 // ===================================================================
 // DEFAULT CONTENT
@@ -3528,6 +3579,9 @@ function plainTextToParagraphHTML(text) {
 
 function setupEditorEvents() {
   editor.addEventListener('paste', e => {
+    if (editor.innerHTML.trim() === DEFAULT_HTML.trim()) {
+      editor.innerHTML = '';
+    }
     const pasteBeforeEnding = movePastePointBeforeEndingIfNeeded();
     const imageFiles = getClipboardImageFiles(e.clipboardData);
     if (imageFiles.length) {
@@ -4822,6 +4876,32 @@ function applyMode(mode) {
 // ===================================================================
 // SETTINGS PANEL
 // ===================================================================
+function togglePocket() {
+  const fan = $('pocketFan');
+  const btn = $('btnMode');
+  if (fan.classList.contains('open')) { closePocket(); return; }
+  fan.classList.add('open');
+  btn.classList.add('open');
+  setTimeout(() => {
+    const handler = e => {
+      if (!$('pocketWrap').contains(e.target)) {
+        closePocket();
+        document.removeEventListener('click', handler);
+        togglePocket._handler = null;
+      }
+    };
+    togglePocket._handler = handler;
+    document.addEventListener('click', handler);
+  }, 10);
+}
+function closePocket() {
+  $('pocketFan').classList.remove('open');
+  $('btnMode').classList.remove('open');
+  if (togglePocket._handler) {
+    document.removeEventListener('click', togglePocket._handler);
+    togglePocket._handler = null;
+  }
+}
 function openSettings(tab) {
   const overlay = $('settingsOverlay');
   const panel = $('settingsPanel');
@@ -5464,31 +5544,39 @@ function doSaveStyle() {
 
 function toggleStylesDropdown() {
   const dd = $('stylesDropdown');
-  if (dd.classList.contains('show')) {
-    dd.classList.remove('show');
-    return;
-  }
+  if (dd.classList.contains('show')) { dd.classList.remove('show'); return; }
   const styles = getSavedStyles();
   if (!styles.length) {
-    dd.innerHTML = '<div class="sd-empty">暂无保存的样式</div>';
+    dd.innerHTML = '<div class="sd-empty">暂无保存的样式<br>点底部「保存为我的样式」添加</div>';
   } else {
     let html = '';
-    styles.forEach((s,i) => {
-      html += `<div class="sd-item">
-        <span class="sd-name" onclick="applyStyle(${i})">${escapeHtml(s.name)}</span>
-        <div class="sd-actions">
-          <button onclick="renameStyle(${i})">改名</button>
-          <button onclick="deleteStyle(${i})">删除</button>
+    styles.forEach((s, i) => {
+      const cs = COLOR_SCHEMES[s.state.colorScheme] || COLOR_SCHEMES[0];
+      const meta = MODE_META[s.state.mode] || { emoji:'🎨', color:'#999' };
+      const modeName = (MODES.find(m => m.id === s.state.mode) || {}).name || s.state.mode;
+      html += `<div class="sd-card" style="animation-delay:${i * 45}ms">
+        <div class="sd-card-colors">
+          <span style="background:${escapeAttr(cs.main)}"></span>
+          <span style="background:${escapeAttr(cs.sub)}"></span>
+          <span style="background:${escapeAttr(cs.accent)}"></span>
+        </div>
+        <div class="sd-card-body" onclick="applyStyle(${i})">
+          <div class="sd-card-name">${escapeHtml(s.name)}</div>
+          <div class="sd-card-meta"><span class="sd-card-mode-tag" style="background:${escapeAttr(meta.color)}">${meta.emoji} ${modeName}</span></div>
+        </div>
+        <div class="sd-card-actions">
+          <button onclick="editStyle(${i});event.stopPropagation()" title="编辑">✏️</button>
+          <button onclick="deleteStyle(${i});event.stopPropagation()" title="删除">🗑️</button>
         </div>
       </div>`;
     });
     dd.innerHTML = html;
+    requestAnimationFrame(() => {
+      dd.querySelectorAll('.sd-card').forEach(el => el.classList.add('pop-in'));
+    });
   }
   dd.classList.add('show');
-  // Close on outside click（单例 handler，避免连点重复挂载）
-  if (toggleStylesDropdown._handler) {
-    document.removeEventListener('click', toggleStylesDropdown._handler);
-  }
+  if (toggleStylesDropdown._handler) document.removeEventListener('click', toggleStylesDropdown._handler);
   setTimeout(() => {
     const handler = e => {
       if (!dd.contains(e.target) && e.target.id !== 'btnMyStyles') {
@@ -5510,15 +5598,84 @@ function applyStyle(i) {
   $('stylesDropdown').classList.remove('show');
 }
 
-function renameStyle(i) {
+function editStyle(i) {
   const styles = getSavedStyles();
-  const name = prompt('输入新名称：', styles[i].name);
-  if (name && name.trim()) {
-    styles[i].name = name.trim();
-    setSavedStyles(styles);
-    toggleStylesDropdown();
-    toggleStylesDropdown();
-  }
+  const s = styles[i];
+  const modeCards = MODES.map(m => {
+    const meta = MODE_META[m.id] || { emoji:'🎨', color:'#999' };
+    const active = s.state.mode === m.id;
+    return `<div class="edit-mode-chip${active?' active':''}"
+      style="border-color:${active?meta.color:'var(--dora-light)'};background:${active?meta.color+'18':'#fff'}"
+      onclick="selectEditMode(this,'${m.id}','${meta.color}')">
+      <span>${meta.emoji}</span>
+      <span style="font-size:11px;font-weight:600;color:${meta.color}">${m.name}</span>
+    </div>`;
+  }).join('');
+  const colorChips = COLOR_SCHEMES.map((cs, idx) => {
+    const active = s.state.colorScheme === idx;
+    return `<div class="color-chip${active?' active':''}" title="${escapeAttr(cs.name)}"
+      onclick="selectEditColor(this,${idx})" style="border-color:${active?escapeAttr(cs.main):'transparent'}">
+      <span style="background:${escapeAttr(cs.main)}"></span>
+      <span style="background:${escapeAttr(cs.accent)}"></span>
+      <span style="background:${escapeAttr(cs.sub)}"></span>
+    </div>`;
+  }).join('');
+  showModal(`
+    <h3>编辑样式</h3>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div>
+        <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:6px">名称</label>
+        <input type="text" id="editStyleName" value="${escapeHtml(s.name)}" maxlength="40">
+      </div>
+      <div>
+        <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:6px">排版模式</label>
+        <div id="editModeGroup" data-val="${escapeAttr(s.state.mode)}" style="display:flex;flex-wrap:wrap;gap:6px">${modeCards}</div>
+      </div>
+      <div>
+        <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:6px">配色</label>
+        <div id="editColorGroup" data-val="${s.state.colorScheme}" style="display:flex;flex-wrap:wrap;gap:6px">${colorChips}</div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="hideModal()">取消</button>
+      <button class="btn-primary" onclick="doEditStyle(${i})">保存</button>
+    </div>
+  `);
+}
+function selectEditMode(el, modeId, color) {
+  const group = $('editModeGroup');
+  group.dataset.val = modeId;
+  group.querySelectorAll('.edit-mode-chip').forEach(c => {
+    c.classList.remove('active');
+    c.style.borderColor = 'var(--dora-light)';
+    c.style.background = '#fff';
+  });
+  el.classList.add('active');
+  el.style.borderColor = color;
+  el.style.background = color + '18';
+}
+function selectEditColor(el, idx) {
+  const group = $('editColorGroup');
+  group.dataset.val = idx;
+  const cs = COLOR_SCHEMES[idx];
+  group.querySelectorAll('.color-chip').forEach(c => {
+    c.classList.remove('active');
+    c.style.borderColor = 'transparent';
+  });
+  el.classList.add('active');
+  el.style.borderColor = cs.main;
+}
+function doEditStyle(i) {
+  const name = $('editStyleName').value.trim().slice(0, 40);
+  if (!name) return;
+  const styles = getSavedStyles();
+  styles[i].name = name;
+  styles[i].state.mode = $('editModeGroup').dataset.val;
+  styles[i].state.colorScheme = parseInt($('editColorGroup').dataset.val);
+  setSavedStyles(styles);
+  hideModal();
+  toggleStylesDropdown();
+  toggleStylesDropdown();
 }
 
 function deleteStyle(i) {
