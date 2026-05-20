@@ -2502,7 +2502,32 @@ function sanitizeContentHTML(html) {
   return tpl.innerHTML;
 }
 function insertSafeHTML(html) {
-  document.execCommand('insertHTML', false, sanitizeContentHTML(html));
+  const safeHtml = sanitizeContentHTML(html);
+  const sel = window.getSelection();
+  let range;
+  if (sel && sel.rangeCount > 0 && editor.contains(sel.anchorNode)) {
+    range = sel.getRangeAt(0);
+  } else {
+    range = document.createRange();
+    range.selectNodeContents(editor);
+    range.collapse(false);
+    if (sel) { sel.removeAllRanges(); sel.addRange(range); }
+  }
+  range.deleteContents();
+  const tpl = document.createElement('template');
+  tpl.innerHTML = safeHtml;
+  const frag = tpl.content.cloneNode(true);
+  const lastChild = frag.lastChild;
+  range.insertNode(frag);
+  if (lastChild && sel) {
+    try {
+      const endRange = document.createRange();
+      endRange.setStartAfter(lastChild);
+      endRange.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(endRange);
+    } catch (e) {}
+  }
 }
 
 // ===================================================================
@@ -2743,19 +2768,26 @@ function doInsertImage() {
 
   // Restore focus and cursor to editor before inserting
   editor.focus();
+  const sel = window.getSelection();
   if (savedEditorRange) {
-    const sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(savedEditorRange);
+    try {
+      sel.removeAllRanges();
+      sel.addRange(savedEditorRange);
+    } catch (e) {
+      // stale range — fall back to end of editor
+      const r = document.createRange();
+      r.selectNodeContents(editor);
+      r.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(r);
+    }
     savedEditorRange = null;
   } else {
-    // If no saved range, move cursor to end of editor
-    const sel = window.getSelection();
-    const range = document.createRange();
-    range.selectNodeContents(editor);
-    range.collapse(false);
+    const r = document.createRange();
+    r.selectNodeContents(editor);
+    r.collapse(false);
     sel.removeAllRanges();
-    sel.addRange(range);
+    sel.addRange(r);
   }
   insertSafeHTML(imgHtml);
   $('imgPanel').classList.remove('show');
