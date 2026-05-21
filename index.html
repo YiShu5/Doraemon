@@ -704,6 +704,7 @@ body::before{
     <div class="dropdown-wrap">
       <button class="btn-secondary" onclick="toggleDropdown('importDropdown')">📥 导入 ▾</button>
       <div class="dropdown-menu" id="importDropdown">
+        <button onclick="importMarkdown();closeDropdowns()">📄 导入 Markdown</button>
         <button onclick="importStyleJSON();closeDropdowns()">⚙️ 导入样式 JSON</button>
       </div>
     </div>
@@ -5986,6 +5987,24 @@ function importStyleJSON() {
       }
     };
     reader.readAsText(file);
+  };
+  input.click();
+}
+
+function importMarkdown() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.md,.markdown,.txt';
+  input.onchange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const parsed = parseMD(ev.target.result || '');
+      editor.innerHTML = sanitizeContentHTML(parsed);
+      scheduleUpdate();
+    };
+    reader.readAsText(file, 'UTF-8');
   };
   input.click();
 }
