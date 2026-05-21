@@ -2233,6 +2233,20 @@ function prepareWechatCompatibility(root) {
   normalizeWechatFlexLayouts(root);
   normalizeWechatCodeBlocks(root);
   normalizeWechatColorModeCompatibility(root);
+  sanitizeFixedWidthsForWechat(root);         // 必须最后：兜底把所有 width:Npx 转 max-width:Npx
+}
+
+// 把 inline style 里所有 width:Npx 转成 max-width:Npx
+// 微信公众号「内容结构检测」只针对 width 不针对 max-width，避免装饰元素触发警告
+function sanitizeFixedWidthsForWechat(root) {
+  Array.from(root.querySelectorAll('[style]')).forEach(el => {
+    const style = el.getAttribute('style') || '';
+    const cleaned = style.replace(
+      /(^|;)\s*width\s*:\s*(\d+(?:\.\d+)?px)\s*(?=;|$)/gi,
+      '$1max-width:$2'
+    );
+    if (cleaned !== style) el.setAttribute('style', cleaned);
+  });
 }
 // 把 ending card 整段 normalize 成 WeChat 友好的结构：
 // 1. 所有 div → section（WeChat 对 section 的内联样式宽容很多，对 div 几乎全剥离）
@@ -2898,7 +2912,7 @@ function insertNumberedHeading() {
     <div style="flex-shrink:0;padding-right:16px;min-width:48px;text-align:center;">
       <span data-theme-role="number" style="font-size:32px;font-weight:900;color:${mainColor};line-height:1;letter-spacing:-1px;">${num}</span>
     </div>
-    <div data-theme-role="divider" style="width:1px;height:36px;background:${alphaColor(mainColor, 0.26, '#c8c8c8')};flex-shrink:0;margin-right:16px;"></div>
+    <span data-theme-role="divider" style="display:inline-block;border-left:1px solid ${alphaColor(mainColor, 0.26, '#c8c8c8')};height:36px;vertical-align:middle;margin-right:16px;flex-shrink:0;"></span>
     <div style="flex:1;">
       <span data-theme-role="title" style="font-size:18px;font-weight:700;color:${mainColor};line-height:1.4;letter-spacing:0.02em;">在此输入标题</span>
     </div>
@@ -3551,16 +3565,16 @@ function insertEnding(type) {
         <section data-theme-role="title" style="display:block;font-size:18px;font-weight:700;color:${mainColor};margin-bottom:8px">既然看到这里了</section>
         <section data-theme-role="body" style="display:block;font-size:14px;color:${textColor};opacity:0.72;margin-bottom:24px;line-height:1.7">觉得有启发，记得点赞、爱心，<br>转发给同样需要的人。</section>
         <table style="margin:0 auto 24px;border-collapse:collapse;border-spacing:0;border:0"><tr>
-          <td style="padding:0 12px;vertical-align:middle;border:0"><section data-theme-role="icon-main" style="display:inline-block;width:48px;height:48px;line-height:48px;border-radius:50%;background:${alphaColor(mainColor, 0.12, '#eee')};font-size:20px;text-align:center;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif">👍️</section></td>
-          <td style="padding:0 12px;vertical-align:middle;border:0"><section data-theme-role="icon-sub" style="display:inline-block;width:48px;height:48px;line-height:48px;border-radius:50%;background:${alphaColor(mainColor, 0.12, '#eee')};font-size:20px;text-align:center;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif">❤️</section></td>
-          <td style="padding:0 12px;vertical-align:middle;border:0"><section data-theme-role="icon-accent" style="display:inline-block;width:48px;height:48px;line-height:48px;border-radius:50%;background:${alphaColor(mainColor, 0.12, '#eee')};font-size:20px;text-align:center;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif">↗️</section></td>
+          <td style="padding:0 12px;vertical-align:middle;border:0"><section data-theme-role="icon-main" style="display:inline-block;padding:14px 13px;line-height:1;border-radius:50%;background:${alphaColor(mainColor, 0.12, '#eee')};font-size:20px;text-align:center;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif">👍️</section></td>
+          <td style="padding:0 12px;vertical-align:middle;border:0"><section data-theme-role="icon-sub" style="display:inline-block;padding:14px 13px;line-height:1;border-radius:50%;background:${alphaColor(mainColor, 0.12, '#eee')};font-size:20px;text-align:center;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif">❤️</section></td>
+          <td style="padding:0 12px;vertical-align:middle;border:0"><section data-theme-role="icon-accent" style="display:inline-block;padding:14px 13px;line-height:1;border-radius:50%;background:${alphaColor(mainColor, 0.12, '#eee')};font-size:20px;text-align:center;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif">↗️</section></td>
         </tr></table>
         <section data-theme-role="meta" style="display:block;font-size:13px;color:${mainColor};opacity:0.62;font-weight:500;line-height:1.7">关注意疏，我们一起把看见的机会，<br>变成撑起自己的能力。</section>
       </section>`;
       break;
     case 2:
       html = `<div data-ending-type="2" style="text-align:center;margin:2em 0">
-        <div data-theme-role="divider" style="width:40px;height:1px;background:${alphaColor(mainColor, 0.34, '#ddd')};margin:0 auto 20px"></div>
+        <p data-theme-role="divider" style="text-align:center;margin:0 0 20px;line-height:0;"><span style="display:inline-block;border-top:1px solid ${alphaColor(mainColor, 0.34, '#ddd')};padding:0 20px;line-height:0;font-size:0;">&nbsp;</span></p>
         <div style="font-size:16px;color:${mainColor};margin-bottom:12px">感谢阅读</div>
         <div data-theme-role="body" style="font-size:14px;color:${textColor};opacity:0.56;margin-bottom:8px">— 意疏的 AI 口袋 —</div>
         <div data-theme-role="meta" style="font-size:12px;color:${mainColor};opacity:0.32">2025.01.01</div>
@@ -3577,7 +3591,7 @@ function insertEnding(type) {
       html = `<div data-ending-type="4" style="text-align:center;margin:2em 0">
         <div data-theme-role="dots" style="font-size:14px;letter-spacing:12px;color:${mainColor};opacity:0.32;margin-bottom:16px">· · ·</div>
         <div style="font-size:24px;letter-spacing:0.5em;color:${mainColor};font-weight:300;margin-bottom:16px">END</div>
-        <div data-theme-role="divider" style="width:60px;height:1px;background:${alphaColor(mainColor, 0.26, '#e5e7eb')};margin:0 auto"></div>
+        <p data-theme-role="divider" style="text-align:center;margin:0;line-height:0;"><span style="display:inline-block;border-top:1px solid ${alphaColor(mainColor, 0.26, '#e5e7eb')};padding:0 30px;line-height:0;font-size:0;">&nbsp;</span></p>
       </div>`;
       break;
   }
