@@ -2772,18 +2772,16 @@ function doInsertImage() {
   // Check if we're inserting into a badge
   if (targetBadgeForImage) {
     const badge = targetBadgeForImage;
-    const originalText = badge.querySelector('[data-badge-text]')?.textContent || '';
-    // Set image as background instead of inner img, so it fully covers the badge area
-    badge.style.backgroundImage = `url("${escapeAttr(srcList[0])}")`;
-    badge.style.backgroundSize = 'cover';
-    badge.style.backgroundPosition = 'center';
-    // Keep text but make it readable over image
-    const textSpan = badge.querySelector('[data-badge-text]');
-    if (textSpan) {
-      textSpan.style.textShadow = '0 1px 3px rgba(0,0,0,0.5)';
-      textSpan.style.color = '#fff';
-    }
-    badge.setAttribute('data-badge-original-text', originalText);
+    // 用 <img> 标签替代 background-image：微信公众号会剥离 inline style 里的
+    // background-image:url(...)，必须用 <img> 才能在复制后保留图片显示
+    const imgSrc = srcList[0];
+    badge.innerHTML = `<img src="${escapeAttr(imgSrc)}" alt="image" style="display:block;width:100%;height:auto;border-radius:14px;">`;
+    badge.setAttribute('data-badge-has-image', '1');
+    badge.style.padding = '0';
+    badge.style.background = '';
+    badge.style.backgroundImage = '';
+    badge.style.backgroundSize = '';
+    badge.style.backgroundPosition = '';
     badge.title = '点击更换图片';
     badge.style.cursor = 'pointer';
     targetBadgeForImage = null;
@@ -4580,7 +4578,9 @@ function applyThemedComponents(c) {
     const body = el.querySelector('[data-theme-role="body"]');
     if (meta) meta.style.color = main;
     if (highlight) highlight.style.color = main;
-    if (badge) badge.style.background = `linear-gradient(135deg, ${alphaColor(main,0.14,sub)}, ${alphaColor(accent,0.12,'#fff')})`;
+    if (badge && !badge.hasAttribute('data-badge-has-image')) {
+      badge.style.background = `linear-gradient(135deg, ${alphaColor(main,0.14,sub)}, ${alphaColor(accent,0.12,'#fff')})`;
+    }
     if (bar) bar.style.background = grad;
     if (chipMain) {
       chipMain.style.background = main;
