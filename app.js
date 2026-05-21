@@ -2174,8 +2174,10 @@ function insertDesignIntro() {
           <p data-theme-role="body" style="font-size:12px;color:#9CA3AF;margin:0;line-height:1.7;letter-spacing:0.5px;">节点 · 关键词 · 结论</p>
         </td>
         <td style="padding:0 0 0 16px;vertical-align:middle;border:0;white-space:nowrap;">
-          <section data-theme-role="badge" style="border-radius:16px;background:linear-gradient(135deg,${alphaColor(main,0.14,sub)},${alphaColor(accent,0.12,'#fff')});text-align:center;padding:40px 24px;" title="点击插入图片">
-            <span data-badge-text="true" style="font-size:14px;font-weight:900;color:${main};line-height:1.4;">插入图片</span>
+          <section data-theme-role="badge" style="border-radius:16px;background:linear-gradient(135deg,${alphaColor(main,0.16,sub)},${alphaColor(accent,0.12,'#fff')});border:2px dashed #F5C518;text-align:center;padding:24px 14px;cursor:pointer;box-sizing:border-box;" title="点击这里插入图片">
+            <span style="display:block;font-size:30px;line-height:1;margin-bottom:6px;">📸</span>
+            <span data-badge-text="true" style="display:block;font-size:13px;font-weight:800;color:${main};line-height:1.3;">点这里插图</span>
+            <span style="display:block;font-size:10px;color:#016FAD;opacity:0.6;font-weight:700;letter-spacing:1px;margin-top:3px;">🔔 哆啦提示</span>
           </section>
         </td>
       </tr></tbody></table>
@@ -3553,6 +3555,9 @@ function applyPreviewStyles() {
   preview.querySelectorAll('strong').forEach(s => { s.style.color = c.accent; s.style.fontWeight = '700'; });
   preview.querySelectorAll('em').forEach(e => { e.style.color = c.main; e.style.fontStyle = 'italic'; });
   preview.querySelectorAll('img').forEach(img => {
+    // 跳过 design-intro 的 badge 缩略图：它有自己的固定宽高 + object-fit，
+    // 被通用 img 样式（height:auto / margin:8px 0）覆盖会导致缩略图错位甚至消失
+    if (img.closest('[data-theme-role="badge"]')) return;
     img.style.maxWidth = img.style.maxWidth || '100%';
     if (!img.style.borderRadius) img.style.borderRadius = '12px';
     img.style.height = 'auto';
