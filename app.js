@@ -1735,11 +1735,30 @@ function toggleImgPanel() {
     savedEditorRange = sel.getRangeAt(0).cloneRange();
   }
   p.classList.toggle('show');
+  // Toggle badge-only size row visibility: show only when opening from a badge click
+  const badgeRow = $('imgBadgeSizeRow');
+  if (badgeRow) badgeRow.style.display = (!willClose && targetBadgeForImage) ? 'flex' : 'none';
   // If user is closing the panel without inserting, drop the badge target
   // so the next normal image insert doesn't accidentally land in an old badge.
   if (willClose) targetBadgeForImage = null;
   $('hrPanel')?.classList.remove('show');
   $('alignPanel')?.classList.remove('show');
+}
+function setBadgePreset(w, h, btn) {
+  const wInput = $('imgBadgeW');
+  const hInput = $('imgBadgeH');
+  if (wInput) wInput.value = w;
+  if (hInput) hInput.value = h;
+  if (btn && btn.parentElement) {
+    btn.parentElement.querySelectorAll('.badge-preset').forEach(b => {
+      b.style.background = '#fff';
+      b.style.border = '1px solid var(--border)';
+      b.style.color = '';
+    });
+    btn.style.background = 'var(--dora-cream)';
+    btn.style.border = '1.5px solid var(--dora-blue)';
+    btn.style.color = 'var(--dora-deep)';
+  }
 }
 function toggleHrPanel() {
   const sel = window.getSelection();
@@ -1851,20 +1870,26 @@ function doInsertImage() {
     const badge = targetBadgeForImage;
     // 用 <img> 标签替代 background-image：微信公众号会剥离 inline style 里的
     // background-image:url(...)，必须用 <img> 才能在复制后保留图片显示
-    // 给 badge 一个明确的 120px 方形尺寸，否则 td 是 white-space:nowrap + section 无显式宽度
+    // 给 badge 明确的 W×H，否则 td 是 white-space:nowrap + section 无显式宽度
     // + img width:100% 形成环形依赖 → 浏览器把列宽算成 0，整个 badge 视觉消失
     const imgSrc = srcList[0];
-    badge.innerHTML = `<img src="${escapeAttr(imgSrc)}" alt="image" style="display:block;width:120px;height:120px;border-radius:14px;object-fit:cover;">`;
+    const badgeW = clampNumber($('imgBadgeW')?.value, 40, 320, 120);
+    const badgeH = clampNumber($('imgBadgeH')?.value, 40, 320, 120);
+    const radius = clampNumber($('imgRadius')?.value, 0, 50, 14);
+    badge.innerHTML = `<img src="${escapeAttr(imgSrc)}" alt="image" style="display:block;width:${badgeW}px;height:${badgeH}px;border-radius:${radius}px;object-fit:cover;">`;
     badge.setAttribute('data-badge-has-image', '1');
     badge.style.padding = '0';
-    badge.style.width = '120px';
-    badge.style.height = '120px';
+    badge.style.width = badgeW + 'px';
+    badge.style.height = badgeH + 'px';
     badge.style.background = '';
     badge.style.backgroundImage = '';
     badge.style.backgroundSize = '';
     badge.style.backgroundPosition = '';
     badge.title = '点击更换图片';
     badge.style.cursor = 'pointer';
+    // Hide badge size row after insert
+    const _badgeRow = $('imgBadgeSizeRow');
+    if (_badgeRow) _badgeRow.style.display = 'none';
     targetBadgeForImage = null;
     $('imgPanel').classList.remove('show');
     pendingImgData = [];

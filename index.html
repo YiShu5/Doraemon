@@ -160,6 +160,16 @@
           <input type="color" id="imgBorderC2" value="#0066FF" style="width:28px;height:24px;border:1px solid #ddd;border-radius:4px;padding:1px;cursor:pointer">
           <span style="font-size:10px;color:#999;margin-left:4px">渐变混合</span>
         </div>
+        <div class="img-options" id="imgBadgeSizeRow" style="display:none;margin-top:8px;flex-wrap:wrap;gap:6px">
+          <label style="font-size:11px;color:#666;margin-right:2px">badge 尺寸</label>
+          <input type="number" id="imgBadgeW" value="120" min="40" max="320" style="width:54px;padding:4px 6px;border:1px solid var(--border);border-radius:4px;font-size:11px">
+          <span style="font-size:11px;color:#999">×</span>
+          <input type="number" id="imgBadgeH" value="120" min="40" max="320" style="width:54px;padding:4px 6px;border:1px solid var(--border);border-radius:4px;font-size:11px">
+          <span style="font-size:11px;color:#999;margin-right:6px">px</span>
+          <button type="button" class="badge-preset" onclick="setBadgePreset(120,120,this)" style="font-size:11px;padding:3px 8px;border:1.5px solid var(--dora-blue);background:var(--dora-cream);color:var(--dora-deep);border-radius:12px;cursor:pointer">方形</button>
+          <button type="button" class="badge-preset" onclick="setBadgePreset(160,100,this)" style="font-size:11px;padding:3px 8px;border:1px solid var(--border);background:#fff;border-radius:12px;cursor:pointer">横版</button>
+          <button type="button" class="badge-preset" onclick="setBadgePreset(100,140,this)" style="font-size:11px;padding:3px 8px;border:1px solid var(--border);background:#fff;border-radius:12px;cursor:pointer">竖版</button>
+        </div>
         <button class="img-insert-btn" onclick="doInsertImage()">插入图片</button>
       </div>
       <div class="hr-panel" id="hrPanel">
